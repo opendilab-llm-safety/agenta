@@ -2,6 +2,16 @@ FROM node:18-alpine
 
 WORKDIR /app
 
+ARG http_proxy
+ARG https_proxy
+ARG HTTP_PROXY
+ARG HTTPS_PROXY
+
+ENV http_proxy=$http_proxy
+ENV https_proxy=$https_proxy
+ENV HTTP_PROXY=$HTTP_PROXY
+ENV HTTPS_PROXY=$HTTPS_PROXY
+
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 RUN \
@@ -11,6 +21,8 @@ RUN \
     # Allow install without lockfile, so example works even without Node.js installed locally
     else echo "Warning: Lockfile not found. It is recommended to commit lockfiles to version control." && yarn install; \
     fi
+
+RUN npm install next@canary
 
 COPY src ./src
 COPY public ./public
