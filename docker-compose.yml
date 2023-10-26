@@ -21,8 +21,8 @@ services:
         environment:
             - MONGODB_URI=mongodb://username:password@mongo:27017
             - ENVIRONMENT=development
-            - BARE_DOMAIN_NAME=localhost
-            - DOMAIN_NAME=http://localhost
+            - BARE_DOMAIN_NAME=$SERVER_HOST:$SERVER_PORT
+            - DOMAIN_NAME=http://$SERVER_HOST:$SERVER_PORT
             - FEATURE_FLAG=oss
         volumes:
             - ./agenta-backend/agenta_backend:/app/agenta_backend
